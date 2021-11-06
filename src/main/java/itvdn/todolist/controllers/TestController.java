@@ -12,4 +12,9 @@ public class TestController {
     public ResponseEntity<String> getTest() {
         return new ResponseEntity<>("This is our test message", HttpStatus.OK);
     }
+
+    @GetMapping(path = "/test2")
+    public ResponseEntity<String> getTestTwo() {
+        return new ResponseEntity<>("This is our test two message", HttpStatus.OK);
+    }
 }
