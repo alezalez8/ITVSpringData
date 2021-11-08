@@ -25,7 +25,9 @@ public class UserService implements IUserService {
 
     @Override
     public int createUser(User user) {
-        return 0;
+        int result = jdbcTemplate.update("INSERT INTO Users VALUES(1, 'aleks@ukr.net', 'qwerty1234')");
+
+        return result;
     }
 
     @Override

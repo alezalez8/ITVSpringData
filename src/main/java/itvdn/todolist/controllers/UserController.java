@@ -1,5 +1,6 @@
 package itvdn.todolist.controllers;
 
+import itvdn.todolist.domain.User;
 import itvdn.todolist.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class UserController {
     @GetMapping(path = "/create_table")
     public ResponseEntity<String> getTest() {
         userService.createTableUser();
+        userService.createUser(new User());
         return new ResponseEntity<>("Table has been created", HttpStatus.OK);
     }
 
