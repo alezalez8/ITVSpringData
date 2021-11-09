@@ -41,16 +41,17 @@ public class UserService implements IUserService {
         return foundUser;
     }
 
-    @Override
-    public int updateUser(User updatedUser, long id) {
-        String query = "UPDATE User SET Email='" + updatedUser.getEmail() + "', password='" + updatedUser.getPassword() + "' WHERE id=" + id;
-        int result = jdbcTemplate.update(query);
-        return result;
-    }
+
+@Override
+public int updateUser(User updatedUser, long id) {
+    String query = "UPDATE Users SET Email='" + updatedUser.getEmail() + "', password='" + updatedUser.getPassword() + "' WHERE id=" + id;
+    int result = jdbcTemplate.update(query);
+    return result;
+}
 
     @Override
     public int deleteUser(long id) {
-        String query = "DELETE * FROM Users WHERE Id=?";
+        String query = "DELETE  FROM Users WHERE Id=" + id;
         int result = jdbcTemplate.update(query);
         return result;
     }
