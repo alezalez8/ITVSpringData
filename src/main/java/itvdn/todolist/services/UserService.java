@@ -3,6 +3,7 @@ package itvdn.todolist.services;
 import itvdn.todolist.domain.User;
 import itvdn.todolist.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ public class UserService implements IUserService {
     public UserService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+
 
     public void createTableUser() {
         jdbcTemplate.execute("DROP TABLE IF EXISTS Users");
@@ -33,16 +36,22 @@ public class UserService implements IUserService {
 
     @Override
     public User getUser(long id) {
-        return null;
+        String query = "SELECT * FROM Users WHERE Id =?";
+        User foundUser = jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(User.class));
+        return foundUser;
     }
 
     @Override
-    public int updateUser(User user) {
-        return 0;
+    public int updateUser(User updatedUser, long id) {
+        String query = "UPDATE User SET Email='" + updatedUser.getEmail() + "', password='" + updatedUser.getPassword() + "' WHERE id=" + id;
+        int result = jdbcTemplate.update(query);
+        return result;
     }
 
     @Override
     public int deleteUser(long id) {
-        return 0;
+        String query = "DELETE * FROM Users WHERE Id=?";
+        int result = jdbcTemplate.update(query);
+        return result;
     }
 }
