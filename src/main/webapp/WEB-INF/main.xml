@@ -14,15 +14,14 @@
     <context:component-scan base-package="itvdn.todolist"/>
     <mvc:annotation-driven/>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
-        <property name="driverClassName" value="org.h2.Driver"/>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.h2.Driver"/>
         <property name="url" value="jdbc:h2:C:/H2/TodoListDB"/>
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
 
 
-<!-- настройка Entity manager-->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
@@ -33,13 +32,12 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
                 <prop key="hibernate.generate-ddl">true</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl">create-drop</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
             </props>
         </property>
 
         <property name="packagesToScan" value="itvdn.todolist.domain"/>
     </bean>
-    <!-- конец настройки Entity manager-->
-
 
 </beans>

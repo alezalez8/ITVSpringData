@@ -13,13 +13,10 @@ public class UserService implements IUserService {
 
     @Autowired
     public UserService() {
-
     }
-
 
     @Override
     public int createUser(User user) {
-
         return 0;
     }
 
