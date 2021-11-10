@@ -18,11 +18,28 @@
         <property name="driverClassName" value="org.h2.Driver"/>
         <property name="url" value="jdbc:h2:C:/H2/TodoListDB"/>
         <property name="username" value="sa"/>
-        <property name="password" value="" />
+        <property name="password" value=""/>
     </bean>
 
- <!--   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+
+<!-- настройка Entity manager-->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-    </bean>-->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.generate-ddl">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl">create-drop</prop>
+            </props>
+        </property>
+
+        <property name="packagesToScan" value="itvdn.todolist.domain"/>
+    </bean>
+    <!-- конец настройки Entity manager-->
+
 
 </beans>

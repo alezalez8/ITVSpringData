@@ -1,0 +1,14 @@
+fetch("http://localhost:8080/todo/user/create", {
+body: JSON.stringify({
+id: 1,
+email: "aviokon@ukr.net",
+password: "qwerty123"
+}),
+method: "post",
+headers: new Headers({
+"Content-type": "application/json; charSet=UTF-8"
+})
+});
+
+
+{"id": "1", "email": "aviokon@ukr.net","password": "qwerty123"}
