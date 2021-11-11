@@ -20,12 +20,17 @@ public class User {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
+
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Todo> todoList = new HashSet<>();
 
     public Set<Todo> getTodoList() {
         return todoList;
     }
+
+    @OneToOne
+    private MyOwnTable myOwnTable;
 
     //-------------------- add new_todo ---------------------------------
     public void addTodo(Todo todo) {

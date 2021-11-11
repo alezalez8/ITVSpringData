@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -21,17 +22,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/user/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        User result = userService.createUser(user);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/todo")
-    public ResponseEntity<Todo> testMapping(@RequestBody Todo todo) {
-        String message = "todo";
-        System.out.println(message);
-        return new ResponseEntity(todo, HttpStatus.OK);
+    @GetMapping(path = "/user/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        User result = userService.getUser(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
 }
