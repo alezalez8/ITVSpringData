@@ -3,25 +3,60 @@ package itvdn.todolist.services;
 import itvdn.todolist.domain.User;
 import itvdn.todolist.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 public class UserService implements IUserService {
 
+/*
     private final EntityManagerFactory entityManagerFactory;
-
-
     @Autowired
     public UserService(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
+*/
 
+  @PersistenceContext
+  EntityManager entityManager;
+
+    @Override
+    @Transactional
+    public User createUser(User user) {
+        entityManager.persist(user);
+        User result = new User();
+        result.setId(user.getId());
+        result.setEmail(user.getEmail());
+        result.setPassword(user.getPassword());
+        return result;
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User getUser(long id) {
+        User foundUser = entityManager
+                .createQuery("SELECT user FROM User user WHERE user.id = :id", User.class)
+                .setParameter("id", id)
+                .getSingleResult(); // return Object, поэтому добавляем  User.class
+        User result = new User();
+        result.setId(foundUser.getId());
+        result.setEmail(foundUser.getEmail());
+        result.setPassword(foundUser.getPassword());
+        //entityManager.getTransaction().commit();
+        return result;
+    }
+
+
+
+
+
+
+/*
     @Override
     public User createUser(User user) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -47,12 +82,15 @@ public class UserService implements IUserService {
         }
 
     }
+*/
+
+
 
     @Override
     public List<User> getAllUsers() {
         return null;
     }
-
+/*
     @Override
     public User getUser(long id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -82,6 +120,7 @@ public class UserService implements IUserService {
 
 
     }
+*/
 
 
     @Override

@@ -1,15 +1,15 @@
 package itvdn.todolist.domain;
 
 
-import lombok.Getter;
-import lombok.Setter;
+/*import lombok.Getter;
+import lombok.Setter;*/
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "MY_TABLE")
-@Getter
-@Setter
+/*@Getter
+@Setter*/
 public class MyOwnTable {
 
     @Id
