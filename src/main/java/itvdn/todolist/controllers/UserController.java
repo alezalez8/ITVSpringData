@@ -44,4 +44,12 @@ public class UserController {
         List<UserPojo> result = userService.getAllUsers();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping(path = "/delete/{id}")
+    public ResponseEntity<UserPojo> deleteUser(@PathVariable Long id) {
+       // UserPojo result = userService.getUser(id);
+        userService.deleteUser(id);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
 }

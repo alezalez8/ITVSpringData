@@ -65,10 +65,6 @@ public class UserService implements IUserService {
     }
 
 
-
-
-
-
 /*
     @Override
     public User createUser(User user) {
@@ -96,8 +92,6 @@ public class UserService implements IUserService {
 
     }
 */
-
-
 
     @Override
     @Transactional(readOnly = true)
@@ -146,6 +140,10 @@ public class UserService implements IUserService {
 
     @Override
     public UserPojo deleteUser(long id) {
+        User result = entityManager
+                .createQuery("DELETE  FROM User user WHERE user.id = :id", User.class)
+                .setParameter("id", id)
+                .getSingleResult();
         return null;
     }
 }
