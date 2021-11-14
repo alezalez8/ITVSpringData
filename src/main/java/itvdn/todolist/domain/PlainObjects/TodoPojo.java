@@ -1,11 +1,17 @@
 package itvdn.todolist.domain.PlainObjects;
 
 import itvdn.todolist.domain.Priority;
-import itvdn.todolist.domain.User;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 
+//@Component
+@Getter
+@Setter
 public class TodoPojo {
 
     private long id;
@@ -17,4 +23,5 @@ public class TodoPojo {
     private Priority priority;
     private TagPojo user;
     private Set<TagPojo> tagList = new HashSet<>();
+    private Long userId;
 }

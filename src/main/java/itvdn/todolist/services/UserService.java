@@ -1,7 +1,9 @@
 package itvdn.todolist.services;
 
+import itvdn.todolist.domain.PlainObjects.UserPojo;
 import itvdn.todolist.domain.User;
 import itvdn.todolist.services.interfaces.IUserService;
+import itvdn.todolist.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,34 +23,44 @@ public class UserService implements IUserService {
     }
 */
 
+    private final Converter converter;
+
+    @Autowired
+    public UserService(Converter converter) {
+        this.converter = converter;
+    }
+
   @PersistenceContext
   EntityManager entityManager;
 
     @Override
     @Transactional
-    public User createUser(User user) {
+    public UserPojo createUser(User user) {
         entityManager.persist(user);
+/*
         User result = new User();
         result.setId(user.getId());
         result.setEmail(user.getEmail());
         result.setPassword(user.getPassword());
-        return result;
+*/
+        return converter.userToPojo(user);
 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User getUser(long id) {
+    public UserPojo getUser(long id) {
         User foundUser = entityManager
                 .createQuery("SELECT user FROM User user WHERE user.id = :id", User.class)
                 .setParameter("id", id)
                 .getSingleResult(); // return Object, поэтому добавляем  User.class
-        User result = new User();
+
+        /*UserP result = new User();
         result.setId(foundUser.getId());
         result.setEmail(foundUser.getEmail());
-        result.setPassword(foundUser.getPassword());
+        result.setPassword(foundUser.getPassword());*/
         //entityManager.getTransaction().commit();
-        return result;
+        return converter.userToPojo(foundUser);
     }
 
 
@@ -87,7 +99,7 @@ public class UserService implements IUserService {
 
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserPojo> getAllUsers() {
         return null;
     }
 /*
@@ -124,12 +136,12 @@ public class UserService implements IUserService {
 
 
     @Override
-    public User updateUser(User updatedUser, long id) {
+    public UserPojo updateUser(User updatedUser, long id) {
         return null;
     }
 
     @Override
-    public User deleteUser(long id) {
+    public UserPojo deleteUser(long id) {
         return null;
     }
 }

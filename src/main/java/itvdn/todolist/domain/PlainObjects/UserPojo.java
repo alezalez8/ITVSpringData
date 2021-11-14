@@ -1,13 +1,14 @@
 package itvdn.todolist.domain.PlainObjects;
 
-import itvdn.todolist.domain.Todo;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+//@Component
+@Getter
+@Setter
 public class UserPojo {
 
     private Long id;

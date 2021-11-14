@@ -1,8 +1,11 @@
 package itvdn.todolist.controllers;
 
+import itvdn.todolist.domain.PlainObjects.UserPojo;
 import itvdn.todolist.domain.Todo;
 import itvdn.todolist.domain.User;
 import itvdn.todolist.services.interfaces.IUserService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +26,14 @@ public class UserController {
     }
 
     @PostMapping(path = "/user/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User result = userService.createUser(user);
+    public ResponseEntity<UserPojo> createUser(@RequestBody User user) {
+        UserPojo result = userService.createUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping(path = "/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        User result = userService.getUser(id);
+    public ResponseEntity<UserPojo> getUser(@PathVariable Long id) {
+        UserPojo result = userService.getUser(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
