@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
@@ -34,6 +36,12 @@ public class UserController {
     @GetMapping(path = "/user/{id}")
     public ResponseEntity<UserPojo> getUser(@PathVariable Long id) {
         UserPojo result = userService.getUser(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/user/all")
+    public ResponseEntity<List<UserPojo>> getAllUsers() {
+        List<UserPojo> result = userService.getAllUsers();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

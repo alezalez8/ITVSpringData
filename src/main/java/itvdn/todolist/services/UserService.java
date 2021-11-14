@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
@@ -99,8 +100,11 @@ public class UserService implements IUserService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserPojo> getAllUsers() {
-        return null;
+        List<User> listOfUsers = entityManager.createQuery("SELECT user FROM User user", User.class).getResultList();
+        List<UserPojo> result =  listOfUsers.stream().map(user -> converter.userToPojo(user)).collect(Collectors.toList());
+        return result;
     }
 /*
     @Override
