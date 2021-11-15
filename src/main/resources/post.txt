@@ -1,0 +1,38 @@
+{
+    "name": "First Todo",
+    "comment": "This is first todo",
+    "startDate": "2020-02-02",
+    "endDate": "2021-03-03",
+    "important": true,
+    "priority": "high",
+     "tagList": [
+
+    ]
+}
+
+-----
+Hibernate:
+    insert
+    into
+        TODO
+        (COMMENT, END_DATE, IMPORTANT, NAME, PRIORITY, START_DATE, USER_ID, ID)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+-----
+{
+    "id": 10,
+    "name": "First Todo",
+    "comment": "This is first todo",
+    "startDate": 1580601600000,
+    "endDate": 1614729600000,
+    "important": true,
+    "priority": "high",
+    "user": null,
+    "tagList": [],
+    "userId": 1
+}
+
+
+
+
+

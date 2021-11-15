@@ -18,7 +18,7 @@ public class Tag {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "tagList")
@@ -50,5 +50,23 @@ public class Tag {
             return;
         }
         todo.removeTag(this, true);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tag)) return false;
+
+        Tag tag = (Tag) o;
+
+        if (!id.equals(tag.id)) return false;
+        return name.equals(tag.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
     }
 }
