@@ -69,7 +69,7 @@ public void removeUser(User user) {
     }
 //--------------------------------------------------------------------------
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "TODO_TAG", joinColumns = @JoinColumn(name = "TODO_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
     private Set<Tag> tagList = new HashSet<>();
 

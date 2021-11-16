@@ -29,8 +29,8 @@ public class User {
         return todoList;
     }
 
-    @OneToOne
-    private MyOwnTable myOwnTable;
+   /* @OneToOne
+    private MyOwnTable myOwnTable;*/
 
     //-------------------- add new_todo ---------------------------------
     public void addTodo(Todo todo) {
