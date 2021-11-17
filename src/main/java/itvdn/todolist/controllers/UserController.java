@@ -3,6 +3,7 @@ package itvdn.todolist.controllers;
 import itvdn.todolist.domain.PlainObjects.UserPojo;
 import itvdn.todolist.domain.User;
 import itvdn.todolist.services.interfaces.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 public class UserController {
 
@@ -40,9 +42,16 @@ public class UserController {
 
     @PostMapping(path = "/delete/{id}")
     public ResponseEntity<UserPojo> deleteUser(@PathVariable Long id) {
-       // UserPojo result = userService.getUser(id);
+        // UserPojo result = userService.getUser(id);
         userService.deleteUser(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
+
+    @PutMapping(name = "/user/{id}")
+    public ResponseEntity<UserPojo> updateUser(@PathVariable Long id, @RequestBody User source) {
+        UserPojo result = userService.updateUser(source, id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
 }

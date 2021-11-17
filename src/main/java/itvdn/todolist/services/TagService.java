@@ -1,7 +1,9 @@
 package itvdn.todolist.services;
 
 import itvdn.todolist.domain.Tag;
+import itvdn.todolist.repositories.TagRepository;
 import itvdn.todolist.services.interfaces.ITagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,30 @@ import java.util.List;
 @Service
 public class TagService implements ITagService {
 
+   private TagRepository tagRepository;
+
+   @Autowired
+    public TagService(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
+
+    @Override
+    @Transactional
+    public Tag findOrCreate(Tag tag) {
+        List<Tag> foundTags = tagRepository.findByName(tag.getName());
+
+        if(foundTags.isEmpty()) {
+            tagRepository.save(tag);
+            return tag;
+        } else {
+            return foundTags.get(0);
+        }
+
+
+    }
+
+
+/*
     @PersistenceContext
     EntityManager entityManager;
 
@@ -30,4 +56,5 @@ public class TagService implements ITagService {
             return foundTags.get(0);
         }
     }
+*/
 }
