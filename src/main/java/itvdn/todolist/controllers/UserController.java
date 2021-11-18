@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 public class UserController {
 
@@ -35,23 +34,20 @@ public class UserController {
     }
 
     @GetMapping(path = "/users")
-    public ResponseEntity<List<UserPojo>> getAllUsers() {
+    public ResponseEntity<List<UserPojo>> getUser() {
         List<UserPojo> result = userService.getAllUsers();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/delete/{id}")
-    public ResponseEntity<UserPojo> deleteUser(@PathVariable Long id) {
-        // UserPojo result = userService.getUser(id);
-        userService.deleteUser(id);
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-    @PutMapping(name = "/user/{id}")
-    public ResponseEntity<UserPojo> updateUser(@PathVariable Long id, @RequestBody User source) {
+    @PutMapping(path = "/user/{id}")
+    public ResponseEntity<UserPojo> updateUser(@RequestBody User source, @PathVariable Long id) {
         UserPojo result = userService.updateUser(source, id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/user/{id}")
+    public ResponseEntity<String> deleteUser (@PathVariable Long id) {
+        return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
+    }
 
 }

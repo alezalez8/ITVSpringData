@@ -55,50 +55,49 @@ public class TodoService implements ITodoService {
             return converter.todoToPojo(todo);
         } else {
             return converter.todoToPojo(new Todo());
-
         }
-
-
     }
 
     @Override
+    @Transactional
     public TodoPojo getTodo(Long id) {
-        Optional<Todo> getTodoById = todoRepository.findById(id);
-        if (getTodoById.isPresent()) {
-            return converter.todoToPojo(getTodoById.get());
-        } else {
-            return converter.todoToPojo(new Todo());
+        Optional<Todo> todoOptional = todoRepository.findById(id);
+        if (todoOptional.isPresent()) {
+            return converter.todoToPojo(todoOptional.get());
         }
-
+        return converter.todoToPojo(new Todo());
     }
 
     @Override
+    @Transactional
     public List<TodoPojo> getAllTodos(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
-            return todoRepository.findAllByUser(userOptional.get()).stream()
-                    .map(todo -> converter.todoToPojo(todo))
-                    .collect(Collectors.toList());
-        } else {
-            return new ArrayList<>();
+            return todoRepository.findAllByUser(userOptional.get()).stream().map(todo -> converter.todoToPojo(todo)).collect(Collectors.toList());
         }
-
+        return new ArrayList<>();
     }
 
     @Override
-    public String deleteTodo(long id) {
-        Optional<Todo> deleteTodoOptional = todoRepository.findById(id);
-        if (deleteTodoOptional.isPresent()) {
-            todoRepository.delete(deleteTodoOptional.get());
-            return "Todo with id = " + id + "successfully deleted";
-        } else {
-            return "Todo is not present";
+    @Transactional
+    public String deleteTodo(Long id) {
+
+        Optional<Todo> todoForDeleteOptional = todoRepository.findById(id);
+        if(todoForDeleteOptional.isPresent()) {
+            Todo todoForDelete = todoForDeleteOptional.get();
+            todoForDelete.getTagList().stream().collect(Collectors.toList()).forEach(tag -> tag.removeTodo(todoForDelete));
+            todoRepository.delete(todoForDelete);
+            return "Todo with id:" + id + " was successfully removed";
         }
+        return "Todo with id:" + id + " was not found";
     }
 
     @Override
-    public TodoPojo updateTodo(Todo source, long todoId) {
+    @Transactional
+    public TodoPojo updateTodo(Todo source, Long todoId) {
+
         Optional<Todo> targetOptional = todoRepository.findById(todoId);
+
         if (targetOptional.isPresent()) {
             Todo target = targetOptional.get();
 
@@ -108,17 +107,12 @@ public class TodoService implements ITodoService {
             target.setEndDate(source.getEndDate());
             target.setImportant(source.getImportant());
             target.setPriority(source.getPriority());
+
             todoRepository.save(target);
+
             return converter.todoToPojo(target);
-/*
-            target.setUserId(source.getUser().getId());
-            target.setTagList(source.getTagList().stream().map(tag -> tagToPojo(tag)).collect(Collectors.toSet()));
-*/
         } else {
             return converter.todoToPojo(new Todo());
-
         }
-
-
     }
 }
