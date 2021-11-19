@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -68,7 +69,9 @@ public class UserService implements IUserService {
             userRepository.save(target);
             return converter.userToPojo(target);
         } else {
-            return converter.userToPojo(new User());
+           // return converter.userToPojo(new User());
+           // throw  new NoSuchElementException("No such user");
+
         }
     }
 
