@@ -1,11 +1,13 @@
 package itvdn.todolist.services;
 
+import itvdn.todolist.Exceptions.CustomEmptyDataException;
 import itvdn.todolist.domain.PlainObjects.UserPojo;
 import itvdn.todolist.domain.User;
 import itvdn.todolist.repositories.UserRepository;
 import itvdn.todolist.services.interfaces.IUserService;
 import itvdn.todolist.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +49,8 @@ public class UserService implements IUserService {
         if (foundUserOptional.isPresent()) {
             return converter.userToPojo(foundUserOptional.get());
         } else {
-            return converter.userToPojo(new User());
+           // throw new CustomEmptyDataException("unable to get user");
+            throw new NoSuchElementException("unable to get user");
         }
     }
 
@@ -56,6 +59,7 @@ public class UserService implements IUserService {
     public List<UserPojo> getAllUsers() {
         List<User> listOfUsers = userRepository.findAll();
         return listOfUsers.stream().map(user -> converter.userToPojo(user)).collect(Collectors.toList());
+
     }
 
     @Override
@@ -69,8 +73,9 @@ public class UserService implements IUserService {
             userRepository.save(target);
             return converter.userToPojo(target);
         } else {
-           // return converter.userToPojo(new User());
-           // throw  new NoSuchElementException("No such user");
+            // return converter.userToPojo(new User());
+            // throw  new NoSuchElementException("No such user");
+            throw new CustomEmptyDataException("unable to update user");
 
         }
     }
@@ -84,7 +89,7 @@ public class UserService implements IUserService {
             userRepository.delete(userForDeleteOptional.get());
             return "User with id:" + id + " was successfully remover";
         } else {
-            return "User with id:" + id + " doesn't exist";
+            throw new CustomEmptyDataException("unable to delete user");
         }
     }
 }

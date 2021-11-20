@@ -1,5 +1,6 @@
 package itvdn.todolist.services;
 
+import itvdn.todolist.Exceptions.CustomEmptyDataException;
 import itvdn.todolist.domain.PlainObjects.TodoPojo;
 import itvdn.todolist.domain.Tag;
 import itvdn.todolist.domain.Todo;
@@ -54,18 +55,18 @@ public class TodoService implements ITodoService {
 
             return converter.todoToPojo(todo);
         } else {
-            return converter.todoToPojo(new Todo());
+            throw  new CustomEmptyDataException("unable to get user for todo");
         }
     }
 
     @Override
     @Transactional
-    public TodoPojo getTodo(Long id) {
+    public TodoPojo getTodo(Long id)   {
         Optional<Todo> todoOptional = todoRepository.findById(id);
         if (todoOptional.isPresent()) {
             return converter.todoToPojo(todoOptional.get());
         }
-        return converter.todoToPojo(new Todo());
+        throw  new NoSuchElementException("unable to get todo");
     }
 
     @Override
@@ -89,7 +90,7 @@ public class TodoService implements ITodoService {
             todoRepository.delete(todoForDelete);
             return "Todo with id:" + id + " was successfully removed";
         }
-        return "Todo with id:" + id + " was not found";
+        throw  new NoSuchElementException("unable to delete todo");
     }
 
     @Override
@@ -112,7 +113,7 @@ public class TodoService implements ITodoService {
 
             return converter.todoToPojo(target);
         } else {
-            return converter.todoToPojo(new Todo());
+            throw  new NoSuchElementException("unable to update todo");
         }
     }
 }

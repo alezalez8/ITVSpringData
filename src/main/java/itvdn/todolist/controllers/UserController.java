@@ -1,5 +1,6 @@
 package itvdn.todolist.controllers;
 
+import itvdn.todolist.Exceptions.CustomEmptyDataException;
 import itvdn.todolist.domain.PlainObjects.UserPojo;
 import itvdn.todolist.domain.User;
 import itvdn.todolist.services.interfaces.IUserService;
@@ -72,7 +73,9 @@ public class UserController {
     @ExceptionHandler
     public ResponseEntity<String> onMissingUser(EmptyResultDataAccessException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ClassUtils.getShortName(exception.getClass()) +  " No one user was found");
+                .body(ClassUtils.getShortName(exception.getClass())
+                        + exception.getLocalizedMessage()
+                        +  " No one user was found");
     }
 
     @ExceptionHandler
@@ -82,6 +85,16 @@ public class UserController {
                         + exception.getSQLState()
                         +exception.getLocalizedMessage()
                         +": something went wrong with user");
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> customExceptionHandler(CustomEmptyDataException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ClassUtils.getShortName(exception.getClass())
+                + " "
+                + exception.getCause()
+                + " "
+                + exception.getLocalizedMessage());
     }
 
 }

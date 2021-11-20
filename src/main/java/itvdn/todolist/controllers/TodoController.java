@@ -1,5 +1,6 @@
 package itvdn.todolist.controllers;
 
+import itvdn.todolist.Exceptions.CustomEmptyDataException;
 import itvdn.todolist.domain.PlainObjects.TodoPojo;
 import itvdn.todolist.domain.Todo;
 import itvdn.todolist.services.interfaces.ITodoService;
@@ -81,6 +82,16 @@ public class TodoController {
                         + exception.getSQLState()
                         +exception.getLocalizedMessage()
                         +": something went wrong with todo");
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> customExceptionHandler(CustomEmptyDataException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ClassUtils.getShortName(exception.getClass())
+                        + " "
+                        + exception.getCause()
+                        + " "
+                        + exception.getLocalizedMessage());
     }
 
 }
