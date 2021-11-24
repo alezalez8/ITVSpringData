@@ -33,12 +33,12 @@ public class TodoController {
         TodoPojo result = todoService.createTodo(todo, userId);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
-    @GetMapping(path = "/user/{userId}/todo/{id}")
+//----------------------------------------------------
+   /* @GetMapping(path = "/user/{userId}/todo/{id}")
     public ResponseEntity<TodoPojo> getTodo (@PathVariable Long id) {
         return new ResponseEntity<>(todoService.getTodo(id), HttpStatus.OK);
-    }
-
+    }*/
+//--------------------------------------------------
     @GetMapping(path = "/user/{userId}/todos")
     public ResponseEntity<List<TodoPojo>> getAllTodo (@PathVariable Long userId) {
         return new ResponseEntity<>(todoService.getAllTodos(userId), HttpStatus.OK);
@@ -48,12 +48,14 @@ public class TodoController {
     public ResponseEntity<TodoPojo> updateTodo (@RequestBody Todo source, @PathVariable Long id) {
         return new ResponseEntity<>(todoService.updateTodo(source, id), HttpStatus.OK);
     }
-
+    //----------------------------------------------------
+/*
     @DeleteMapping(path = "/user/{userId}/todo/{id}")
     public ResponseEntity<String> deleteTodo (@PathVariable Long id) {
         return new ResponseEntity<>(todoService.deleteTodo(id), HttpStatus.OK);
     }
-
+*/
+//----------------------------------------------------
     /**
      * Exception handling
      */
