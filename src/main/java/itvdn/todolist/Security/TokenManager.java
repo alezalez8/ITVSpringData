@@ -11,8 +11,8 @@ public class TokenManager {
     }
 
     public String createToken(TokenPayload payload) {
-        //String mixedPayload = createSignature(payload);
-        String mixedPayload = createSignature("sffsdgsg");
+        String mixedPayload = createMixedTokenPayload(payload);
+        //String mixedPayload = createSignature("sffsdgsg");
         String signature = createSignature(mixedPayload);
         String token = String.format("%s%s", mixedPayload, signature);
         return token;
@@ -23,7 +23,7 @@ public class TokenManager {
         String id = String.valueOf(payload.getUserId());
         String email = payload.getEmail();
 
-        String mix = String.format("%s#%s#%s", timeOfCreation, id, email);
+        String mix = String.format("%s#%s#%s", id, email, timeOfCreation);
         return mix;
     }
 

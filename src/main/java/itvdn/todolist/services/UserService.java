@@ -49,7 +49,7 @@ public class UserService implements IUserService {
         if (foundUserOptional.isPresent()) {
             return converter.userToPojo(foundUserOptional.get());
         } else {
-           // throw new CustomEmptyDataException("unable to get user");
+            // throw new CustomEmptyDataException("unable to get user");
             throw new NoSuchElementException("unable to get user");
         }
     }
@@ -91,5 +91,17 @@ public class UserService implements IUserService {
         } else {
             throw new CustomEmptyDataException("unable to delete user");
         }
+    }
+
+    @Override
+    @Transactional
+    public UserPojo findUserByEmailAndPassword(String email, String password) {
+        Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+        if (user.isPresent()) {
+            return converter.userToPojo(user.get());
+        } else {
+            return null;
+        }
+
     }
 }

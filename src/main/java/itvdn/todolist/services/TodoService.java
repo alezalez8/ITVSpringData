@@ -61,7 +61,7 @@ public class TodoService implements ITodoService {
 
     @Override
     @Transactional
-    public TodoPojo getTodo(Long id)   {
+    public TodoPojo getTodo(Long id, Long userId)   {
         Optional<Todo> todoOptional = todoRepository.findById(id);
         if (todoOptional.isPresent()) {
             return converter.todoToPojo(todoOptional.get());
@@ -81,7 +81,7 @@ public class TodoService implements ITodoService {
 
     @Override
     @Transactional
-    public String deleteTodo(Long id) {
+    public String deleteTodo(Long id,  Long userId) {
 
         Optional<Todo> todoForDeleteOptional = todoRepository.findById(id);
         if(todoForDeleteOptional.isPresent()) {
