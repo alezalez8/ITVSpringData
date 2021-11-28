@@ -1,8 +1,17 @@
 package itvdn.todolist.Sand.lambda;
 
 public class Program {
+
+    public  void fire(Object sender) {
+        System.out.println("fire!!!");
+
+    }
+
+
     public static void main(String[] args) {
         Switch aSwitch = new Switch();
+        String message = "Пожар";
+
 
         Lamp lamp = new Lamp();
         Lamp lamp1 = new Lamp();
@@ -25,11 +34,17 @@ public class Program {
         }
         aSwitch.addElectricityListener(new Fire());
 */
+        aSwitch.addElectricityListener(r -> System.out.println("Helloy"));
+        aSwitch.addElectricityListener(r -> System.out.println(message));
 
         aSwitch.addElectricityListener(s -> {
-            System.out.print("lambda");
+            System.out.println("lambda");
+            System.out.println(message);
             System.out.println("===========================");
         });
+       // aSwitch.addElectricityListener(s -> (new Program.fire(s));
+        aSwitch.addElectricityListener(new Program()::fire);
+
 
         aSwitch.switchOn();
     }

@@ -23,7 +23,6 @@ public class Switch {
     public void switchOn() {
         System.out.println("Switch is on");
 
-
         if (listeners != null) {
             for (ElectricityConsumer item : listeners) {
                 item.electricityOn(this);
