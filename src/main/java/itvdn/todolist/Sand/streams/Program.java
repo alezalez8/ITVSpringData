@@ -1,8 +1,6 @@
 package itvdn.todolist.Sand.streams;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Program {
     public static void main(String[] args) {
@@ -15,7 +13,26 @@ public class Program {
         nums.add(new Person("Лена", 18));
         nums.add(new Person("Юра", 11));
 
+        Set<String> stringList = new TreeSet<>();
 
+        stringList.add("aad");
+        stringList.add("aab");
+        stringList.add("aaa");
+        stringList.add("aac");
+        stringList.add("aae");
+        stringList.add("aae");
+
+        stringList.stream().forEach(System.out::println);
+
+        System.out.println("========================================");
+
+
+
+        nums.parallelStream().filter(l -> l.getName().endsWith("я"))
+                        .forEach(System.out::println);
+
+
+/*
         //nums.stream().forEach(System.out::println);
         nums.stream()
                 .filter(person -> person.getAge() >= 12)
@@ -31,6 +48,7 @@ public class Program {
                 .mapToInt(p -> p.getAge())
                 .average()
                 .getAsDouble());
+*/
 
     }
 }
