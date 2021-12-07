@@ -1,9 +1,16 @@
 package itvdn.todolist.Sand.springTest;
 
+
+import org.springframework.stereotype.Component;
+
+
 public class QuotersImpl implements Quoters {
 
-    private String message;
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
+    private String message;
 
     @AmountMy(min = 2, max = 7)
     private int ammount;
@@ -15,6 +22,8 @@ public class QuotersImpl implements Quoters {
 
 
     public void messOut() {
-        say();
+        for (int i = 0; i < ammount; i++) {
+            say();
+        }
     }
 }
